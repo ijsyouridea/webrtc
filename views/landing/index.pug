@@ -1,0 +1,69 @@
+extends layout
+
+block content
+  section.hero.is-light.is-fullheight
+    .hero-head
+      header.navbar
+        .container
+          .navbar-brand
+            a.navbar-item
+              img.logo(src='/assets/images/logo_transparent.png' alt="logo")
+            span.navbar-burger.burger(data-target='navbarMenuHeroC')
+              span
+              span
+              span
+          #navbarMenuHeroC.navbar-menu
+            .navbar-end
+              a.navbar-item.is-active
+                | Home
+              a.navbar-item
+                | Privacy
+
+    .hero-body
+      .container.has-text-centered
+        h1.title
+          | Discourse
+        h2.subtitle
+          | Proudly South African video calls
+        img.banner-image(src='/assets/images/vidcall.svg' alt="videochat")
+        .actions#start-call-actions
+          a#new-video-call.button.is-primary.is-inverted(href="#")
+            span.icon
+              i.fa.fab.fa-video
+            span Start a video call
+          a#with-password-btn.button.is-primary.is-inverted(href='#')
+            span.icon
+              i.fa.fab.fa-lock
+            span Setup password protected call
+        .actions
+          #password-form.is-hidden
+            a.button#back(href="#")
+              | back
+            form
+              p.control.has-icons-left
+                input.input(type='password' placeholder='Password')
+                span.icon.is-small.is-left
+                  i.fas.fa-lock
+                button.button.is-success.is-inverted
+                  | Start call
+
+  script.
+    var passwordButton = document.getElementById("with-password-btn");
+    var backButton = document.getElementById("back");
+
+    passwordButton.addEventListener("click", togglePasswordFormVisible);
+    backButton.addEventListener("click", togglePasswordFormVisible);
+
+    function togglePasswordFormVisible(e) {
+      var passwordForm = document.getElementById("password-form");
+      var startCallActions = document.getElementById("start-call-actions");
+      passwordForm.classList.toggle("is-hidden");
+      startCallActions.classList.toggle("is-hidden");
+    }
+
+  script.
+    var newCallBtn = document.getElementById("new-video-call");
+
+    newCallBtn.addEventListener("click", function() {
+      window.open("/call/#{uuid}", '_blank', 'location=yes,height=900,width=1000,scrollbars=no,status=yes');
+    });
